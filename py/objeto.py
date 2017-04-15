@@ -99,7 +99,8 @@ class Objeto():
             + " [" + str(cara.arr[1].getX()) + " " + str(cara.arr[1].getY()) + " " + str(cara.arr[1].getZ()) + "]" 
             + " [" + str(cara.arr[2].getX()) + " " + str(cara.arr[2].getY()) + " " + str(cara.arr[2].getZ()) + "]")
            
-
+    def get_faces(self):
+        return self.faces
     # def imprimeVertex(self):
     #     for vert in self.vertices:
     #         print(vert.getX())
