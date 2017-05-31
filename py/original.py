@@ -56,17 +56,17 @@ def main():
 	glutReshapeFunc(reshape) #controla redimension de pantalla
 	glutKeyboardFunc(keyboard) #controla teclado
 	#glutTimerFunc(timer_secs, movimiento, 0)
-	dona()
+	#dona()
 	glutMainLoop()
 
 def reshape(w, h): #2 parametros, alto y ancho
-#	ar = (w*1.0) / h
+	ar = (w*1.0) / h
 
 	glViewport(0, 0,  w, h)
 	glMatrixMode(GL_PROJECTION)
 	glLoadIdentity()
-	glOrtho(-w, w, -h, h, 1.0, 1000.0)
-#	glFrustum(-ar, ar, -ar, ar, 1.0, 1000.0)
+#	glOrtho(0, w, -h, h, 1.0, 1000.0)
+	glFrustum(-ar, ar, -ar, ar, 1.0, 1000.0)
 	glMatrixMode(GL_MODELVIEW)
 	glLoadIdentity()
 
@@ -76,19 +76,19 @@ def display():
 
 	glMatrixMode(GL_MODELVIEW)
 	glLoadIdentity()
-	gluLookAt(eye[0], eye[1], eye[2], camera[0], camera[1], camera[2], 0.0, 1.0, 0.0)
+#	gluLookAt(eye[0], eye[1], eye[2], camera[0], camera[1], camera[2], 0.0, 1.0, 0.0)
 #	glPushMatrix()
 
 	global torus
 
 	
 
-	glTranslatef(-100.0, 0.0, -50.0)
+	glTranslatef(100.0, 0.0, 0.0)
 
-	glCallList(torus)
+#	glCallList(torus)
 #	glRotated(angulo, 0.0, 1.0, 0.0)
 #	glColor3f(0.0, 0.0, 1.0)
-#	glutSolidTeapot(100.0)
+	glutSolidTeapot(40.0)
 
 #	glTranslate(100.0, 0.0, 50.0)
 #	glColor3f(0.0, 1.0, 0.0) 
@@ -98,23 +98,29 @@ def display():
 #	glColor3f(red,green,blue)
 #	drawTriangle()
 #	drawCircle()
-	glTranslatef(100.0, 100.0, -50.0)
-	glCallList(torus)
+#	glTranslatef(100.0, 100.0, -50.0)
+#	glCallList(torus)
 	#drawCircle()
 #	drawTriangle()
-	glTranslatef(100.0, -100.0, -50.0)
-	glCallList(torus)
+	glTranslatef(100.0, -100.0, 0.0)
+#	glCallList(torus)
 #	drawCircle()
-	glTranslatef(-100.0, -100.0, -50.0)
-	glCallList(torus)
+#	glTranslatef(-100.0, -100.0, -50.0)
+#	glCallList(torus)
 #	drawCircle()
 #	drawTriangle()
-#	glPopMatrix()
+	#glPopMatrix()
 
+#	glBegin(GL_TRIANGLES)
+	#glNormal3f(0.0,0.0,-1.0)
+#	glVertex3i(50,50,0)
+#	glVertex3i(70,50,0)
+#	glVertex3i(60,100,0)
+#	glEnd()
 #	glTranslatef(100.0, 0.0, -100.0)
 #	glRotated(angulo, 0.0, 1.0, 0.0)
 #	glColor3f(0.0, 1.0, 0.0)
-#	glutSolidTeapot(80.0)
+	glutSolidTeapot(40.0)
 
 
 	glFlush()

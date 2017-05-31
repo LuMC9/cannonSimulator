@@ -1,6 +1,6 @@
 "modulo numpy"
 import numpy as np
-
+import math as math
 
 class Vertice():
     "Clase que define un Vertice"
@@ -41,10 +41,24 @@ class Cara():
         self.arr = arr
         self.normal = []
         self.__d = []
+        self.normalizada = []
+        self.set_normal()
+        self.set_d()
+        self.normaliza()
 
     def set_normal(self):
         self.normal = np.cross(
             self.arr[1].esp() - self.arr[0].esp(), self.arr[2].esp() - self.arr[0].esp())
+
+    def normaliza(self):
+        a = self.normal.item(0) ** 2
+        b = self.normal.item(1) ** 2
+        c = self.normal.item(2) ** 2
+        res = math.sqrt(a+b+c)
+
+        self.normalizada = np.matrix([np.divide(self.normal.item(0),res), np.divide(self.normal.item(1),res), np.divide(self.normal.item(2),res)])
+
+
 
     def set_d(self):
         self.__d = (self.normal * self.arr[2].matriz())
@@ -60,8 +74,8 @@ class Objeto():
     "Clase que define un objeto"
 
     def __init__(self, arrayFaces):
-        self.faces = []
         self.vertices = []
+        self.faces = []
 
     def esta_dentro(self, vertex):
         "Valida si un punto se encuentra dentro de un objeto"
@@ -88,13 +102,18 @@ class Objeto():
                 if ln[0] == 'v':
                     self.vertices.append(Vertice(float(ln[1]), float(ln[2]), float(ln[3])))
                 if ln[0] == 'f':
-                   v1 = self.vertices[int(ln[1].split('/')[0]) - 1]
-                   v2 = self.vertices[int(ln[2].split('/')[0]) - 1]
-                   v3 = self.vertices[int(ln[3].split('/')[0]) - 1]
-                   self.faces.append(Cara([v1,v2,v3]))
+                    for x in range (1, len(ln)):
+                        v =  self.vertices[int(ln[x].split('/')[0]) - 1]
+                        verti.append(v)
+                    self.faces.append(Cara(verti))
+                    verti = []
+
    
     def imprime_faces(self):
         for cara in self.faces:
+            cara.impr_ecuacion()
+            print(cara.normal)
+            print("----------")
             print("[" + str(cara.arr[0].getX()) + " " + str(cara.arr[0].getY()) + " " + str(cara.arr[0].getZ()) + "]"
             + " [" + str(cara.arr[1].getX()) + " " + str(cara.arr[1].getY()) + " " + str(cara.arr[1].getZ()) + "]" 
             + " [" + str(cara.arr[2].getX()) + " " + str(cara.arr[2].getY()) + " " + str(cara.arr[2].getZ()) + "]")
@@ -119,7 +138,7 @@ def main():
 
    # linea(_va, _vb, 0.1)
     _obj = Objeto(1)
-    _obj.lee_archivo("cube.txt")
+    _obj.lee_archivo("models/cloud.obj")
  #   _obj.imprimeVertex()
     _obj.imprime_faces()
  #   face1 = Cara([_va, _vb, _vc])
